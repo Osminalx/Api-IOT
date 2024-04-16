@@ -9,8 +9,20 @@ from service.limits_service import get_all_ar_limits
 from service.limits_service import get_all_esp_limits
 from service.sensors_service import get_all_dht_reads
 from service.sensors_service import get_all_bmp_reads
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.config['SQLALCHEMY_POOL_SIZE'] = 20 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins={"*"},
+    allow_credentials=True,
+    allow_methods={"*"},
+    allow_headers={"*"},
+)
+
 
 Base.metadata.create_all(bind=engine)
 
